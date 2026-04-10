@@ -53,37 +53,33 @@ body { font-family: Arial, sans-serif; background:#f2f2f2; margin:0; }
 </div>
 
 <script>
-const items = [
-    {
-        name: "Mapa 1",
-        image: "Images/mapa1.png",
-        file: "Games/mapa1.rbxl",
-        date: "2026",
-        description: "Un mapa clásico estilo Roblox."
-    },
-    {
-        name: "Obby Challenge",
-        image: "Images/obby.png",
-        file: "Games/obby.rbxl",
-        date: "2026",
-        description: "Un obby divertido clásico."
-    }
-];
+let items = [];
+let currentFile = "";
 
 const catalog = document.getElementById("catalog");
 const detail = document.getElementById("detail");
 const detailContent = document.getElementById("detail-content");
 
-// Generar catálogo
-items.forEach((item, index) => {
-    catalog.innerHTML += `
-        <div class="card" onclick="openDetail(${index})">
-            <img src="${item.image}">
-            <div class="title">${item.name}</div>
-            <div class="rating">⭐ 4.5</div>
-        </div>
-    `;
-});
+fetch("data/items.json")
+    .then(res => res.json())
+    .then(data => {
+        items = data;
+        buildCatalog();
+    });
+
+function buildCatalog() {
+    catalog.innerHTML = "";
+
+    items.forEach((item, index) => {
+        catalog.innerHTML += `
+            <div class="card" onclick="openDetail(${index})">
+                <img src="${item.image}">
+                <div class="title">${item.name}</div>
+                <div class="rating">⭐ 4.5</div>
+            </div>
+        `;
+    });
+}
 
 function openDetail(index) {
     const item = items[index];
@@ -99,8 +95,6 @@ function openDetail(index) {
         <div class="download-btn" onclick="openModal('${item.file}','${item.image}')">Obtener</div>
     `;
 }
-
-let currentFile = "";
 
 function openModal(file, img) {
     currentFile = file;
