@@ -4,153 +4,43 @@
 <meta charset="UTF-8">
 <title>RBXL Catalog</title>
 <style>
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f2f2f2;
-    margin: 0;
-}
+body { font-family: Arial, sans-serif; background:#f2f2f2; margin:0; }
+.topbar { background:#fff; border-bottom:1px solid #ccc; padding:12px 20px; font-weight:bold; }
 
-.topbar {
-    background-color: white;
-    border-bottom: 1px solid #ccc;
-    padding: 12px 20px;
-    font-weight: bold;
-}
+.grid { display:grid; grid-template-columns:repeat(auto-fill,200px); gap:20px; padding:20px; justify-content:center; }
+.card { background:#fff; border:1px solid #ccc; padding:10px; cursor:pointer; transition:.2s; }
+.card:hover { transform:scale(1.08); box-shadow:0 4px 10px rgba(0,0,0,.2); }
+.card img { width:100%; height:120px; object-fit:cover; }
+.title { font-size:14px; }
+.rating { font-size:12px; opacity:0; }
+.card:hover .rating { opacity:1; }
 
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, 200px);
-    gap: 20px;
-    padding: 20px;
-    justify-content: center;
-}
+.detail { display:none; padding:40px; }
+.detail-wrapper { max-width:900px; margin:auto; text-align:center; background:#fff; padding:30px; border:1px solid #ccc; }
+.detail img { width:500px; max-width:100%; }
+.detail h2 { font-size:28px; }
+.date { color:#666; }
+.desc { font-size:18px; }
+.download-btn { background:#00b06f; color:#fff; padding:18px; font-size:20px; font-weight:bold; display:inline-block; width:250px; border-radius:5px; cursor:pointer; }
 
-.card {
-    background: white;
-    border: 1px solid #ccc;
-    padding: 10px;
-    transition: all 0.2s ease;
-    cursor: pointer;
-}
-
-.card:hover {
-    transform: scale(1.08);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-}
-
-.card img {
-    width: 100%;
-    height: 120px;
-    object-fit: cover;
-}
-
-.title { font-size: 14px; }
-.rating { font-size: 12px; opacity: 0; }
-.card:hover .rating { opacity: 1; }
-
-.detail {
-    display: none;
-    padding: 40px;
-}
-
-.detail-wrapper {
-    max-width: 900px;
-    margin: auto;
-    text-align: center;
-    background: white;
-    padding: 30px;
-    border: 1px solid #ccc;
-}
-
-.detail img {
-    width: 500px;
-    max-width: 100%;
-}
-
-.detail h2 { font-size: 28px; }
-.date { color: #666; }
-.desc { font-size: 18px; }
-
-.download-btn {
-    background-color: #00b06f;
-    color: white;
-    padding: 18px;
-    font-size: 20px;
-    font-weight: bold;
-    display: inline-block;
-    width: 250px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-/* MODAL */
-.modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.7);
-    justify-content: center;
-    align-items: center;
-}
-
-.modal-content {
-    background: white;
-    padding: 20px;
-    text-align: center;
-    width: 400px;
-}
-
-.modal img {
-    width: 200px;
-    margin: 10px 0;
-}
-
-.modal-buttons {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 15px;
-}
-
-.btn-yes {
-    background: #00b06f;
-    color: white;
-    padding: 10px 20px;
-    cursor: pointer;
-}
-
-.btn-no {
-    background: #ccc;
-    padding: 10px 20px;
-    cursor: pointer;
-}
+.modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,.7); justify-content:center; align-items:center; }
+.modal-content { background:#fff; padding:20px; text-align:center; width:400px; }
+.modal img { width:200px; margin:10px 0; }
+.modal-buttons { display:flex; justify-content:space-between; margin-top:15px; }
+.btn-yes { background:#00b06f; color:#fff; padding:10px 20px; cursor:pointer; }
+.btn-no { background:#ccc; padding:10px 20px; cursor:pointer; }
 </style>
 </head>
 <body>
 
 <div class="topbar">Catálogo</div>
 
-<div id="catalog" class="grid">
-    <div class="card" onclick="openDetail('mapa1')">
-        <img src="https://via.placeholder.com/200x120">
-        <div class="title">Mapa 1</div>
-        <div class="rating">⭐ 4.5</div>
-    </div>
+<div id="catalog" class="grid"></div>
+
+<div id="detail" class="detail">
+    <div class="detail-wrapper" id="detail-content"></div>
 </div>
 
-<div id="detail-mapa1" class="detail">
-    <div class="detail-wrapper">
-        <img id="detail-img" src="https://via.placeholder.com/500x300">
-        <h2>Mapa 1</h2>
-        <div class="date">📅 Creado en 2026</div>
-        <div class="desc">Un mapa clásico de Roblox.</div>
-        <div class="download-btn" onclick="openModal('files/mapa1.rbxl','https://via.placeholder.com/500x300')">Obtener</div>
-    </div>
-</div>
-
-<!-- MODAL -->
 <div id="modal" class="modal">
     <div class="modal-content">
         <h3>¿Quieres descargar el archivo del siguiente juego?</h3>
@@ -163,21 +53,63 @@ body {
 </div>
 
 <script>
-let currentFile = '';
+const items = [
+    {
+        name: "Mapa 1",
+        image: "images/mapa1.png",
+        file: "files/mapa1.rbxl",
+        date: "2026",
+        description: "Un mapa clásico estilo Roblox."
+    },
+    {
+        name: "Obby Challenge",
+        image: "images/obby.png",
+        file: "files/obby.rbxl",
+        date: "2026",
+        description: "Un obby divertido clásico."
+    }
+];
 
-function openDetail(id) {
-    document.getElementById('catalog').style.display = 'none';
-    document.getElementById('detail-' + id).style.display = 'block';
+const catalog = document.getElementById("catalog");
+const detail = document.getElementById("detail");
+const detailContent = document.getElementById("detail-content");
+
+// Generar catálogo
+items.forEach((item, index) => {
+    catalog.innerHTML += `
+        <div class="card" onclick="openDetail(${index})">
+            <img src="${item.image}">
+            <div class="title">${item.name}</div>
+            <div class="rating">⭐ 4.5</div>
+        </div>
+    `;
+});
+
+function openDetail(index) {
+    const item = items[index];
+
+    catalog.style.display = "none";
+    detail.style.display = "block";
+
+    detailContent.innerHTML = `
+        <img src="${item.image}">
+        <h2>${item.name}</h2>
+        <div class="date">📅 Creado en ${item.date}</div>
+        <div class="desc">${item.description}</div>
+        <div class="download-btn" onclick="openModal('${item.file}','${item.image}')">Obtener</div>
+    `;
 }
+
+let currentFile = "";
 
 function openModal(file, img) {
     currentFile = file;
-    document.getElementById('modal-img').src = img;
-    document.getElementById('modal').style.display = 'flex';
+    document.getElementById("modal-img").src = img;
+    document.getElementById("modal").style.display = "flex";
 }
 
 function closeModal() {
-    document.getElementById('modal').style.display = 'none';
+    document.getElementById("modal").style.display = "none";
 }
 
 function downloadFile() {
