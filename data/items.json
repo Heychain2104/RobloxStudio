@@ -1,7 +1,7 @@
 {
-  "name": "Nuevo mapa",
-  "image": "Images/nuevo.png",
-  "file": "Games/nuevo.rbxl",
+  "name": "INNOVATION LABS",
+  "image": "Images/innovation_labs.png",
+  "file": "Games/Innovation_Labs.rbxl",
   "date": "2026",
-  "description": "Descripción del mapa"
+  "description": "Un pequeño laboratorio con distinas cosas funcionales."
 }
