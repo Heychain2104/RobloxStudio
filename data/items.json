@@ -1,7 +1,9 @@
-{
-  "name": "INNOVATION LABS",
-  "image": "Images/innovation_labs.png",
-  "file": "Games/Innovation_Labs.rbxl",
-  "date": "2026",
-  "description": "Un pequeño laboratorio con distinas cosas funcionales."
-}
+[
+  {
+    "name": "Innovation Labs",
+    "image": "Images/innovation_labs.png",
+    "file": "Games/Innovation_Labs.rbxl",
+    "date": "2026",
+    "description": "Un mapa sobre un laboratorio explorable"
+  }
+]
