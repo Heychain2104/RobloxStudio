@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>RBXL Catalog</title>
+<style>
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+}
+
+/* Barra superior estilo Roblox */
+.topbar {
+    background-color: white;
+    border-bottom: 1px solid #ccc;
+    padding: 10px 20px;
+    font-weight: bold;
+    color: black;
+}
+
+/* Grid de tarjetas */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, 200px);
+    gap: 20px;
+    padding: 20px;
+    justify-content: center;
+}
+
+.card {
+    background: white;
+    border: 1px solid #ccc;
+    padding: 10px;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    position: relative;
+}
+
+.card:hover {
+    transform: scale(1.08);
+    z-index: 10;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+}
+
+.card img {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+}
+
+.title {
+    font-size: 14px;
+    margin-top: 5px;
+}
+
+.rating {
+    font-size: 12px;
+    color: #555;
+    margin-top: 5px;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.card:hover .rating {
+    opacity: 1;
+}
+
+/* Página de detalle */
+.detail {
+    display: none;
+    padding: 20px;
+}
+
+.detail-container {
+    display: flex;
+    gap: 20px;
+}
+
+.detail img {
+    width: 400px;
+    border: 1px solid #ccc;
+}
+
+.info {
+    max-width: 400px;
+}
+
+.download-btn {
+    background-color: #00b06f;
+    color: white;
+    padding: 15px;
+    text-align: center;
+    font-weight: bold;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+.download-btn:hover {
+    background-color: #00995f;
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">Catálogo</div>
+
+<!-- LISTA -->
+<div id="catalog" class="grid">
+
+    <div class="card" onclick="openDetail('mapa1')">
+        <img src="https://via.placeholder.com/200x120">
+        <div class="title">Mapa 1</div>
+        <div class="rating">⭐ 4.5</div>
+    </div>
+
+    <div class="card" onclick="openDetail('obby')">
+        <img src="https://via.placeholder.com/200x120">
+        <div class="title">Obby Challenge</div>
+        <div class="rating">⭐ 4.8</div>
+    </div>
+
+</div>
+
+<!-- DETALLE -->
+<div id="detail-mapa1" class="detail">
+    <div class="detail-container">
+        <img src="https://via.placeholder.com/400x250">
+        <div class="info">
+            <h2>Mapa 1</h2>
+            <p>📅 Subido: 2026</p>
+            <p>Un mapa clásico de Roblox.</p>
+            <a href="files/mapa1.rbxl" download>
+                <div class="download-btn">Obtener</div>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div id="detail-obby" class="detail">
+    <div class="detail-container">
+        <img src="https://via.placeholder.com/400x250">
+        <div class="info">
+            <h2>Obby Challenge</h2>
+            <p>📅 Subido: 2026</p>
+            <p>Un obby divertido estilo clásico.</p>
+            <a href="files/obby.rbxl" download>
+                <div class="download-btn">Obtener</div>
+            </a>
+        </div>
+    </div>
+</div>
+
+<script>
+function openDetail(id) {
+    document.getElementById('catalog').style.display = 'none';
+    document.querySelectorAll('.detail').forEach(el => el.style.display = 'none');
+    document.getElementById('detail-' + id).style.display = 'block';
+}
+</script>
+
+</body>
+</html>
