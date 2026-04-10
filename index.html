@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <title>RBXL Catalog</title>
+
 <style>
 body { font-family: Arial, sans-serif; background:#f2f2f2; margin:0; }
 .topbar { background:#fff; border-bottom:1px solid #ccc; padding:12px 20px; font-weight:bold; }
@@ -21,15 +22,50 @@ body { font-family: Arial, sans-serif; background:#f2f2f2; margin:0; }
 .detail h2 { font-size:28px; }
 .date { color:#666; }
 .desc { font-size:18px; }
-.download-btn { background:#00b06f; color:#fff; padding:18px; font-size:20px; font-weight:bold; display:inline-block; width:250px; border-radius:5px; cursor:pointer; }
 
-.modal { display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,.7); justify-content:center; align-items:center; }
-.modal-content { background:#fff; padding:20px; text-align:center; width:400px; }
+.download-btn {
+  background:#00b06f;
+  color:#fff;
+  padding:18px;
+  font-size:20px;
+  font-weight:bold;
+  display:inline-block;
+  width:250px;
+  border-radius:5px;
+  cursor:pointer;
+}
+
+.modal {
+  display:none;
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  background:rgba(0,0,0,.7);
+  justify-content:center;
+  align-items:center;
+}
+
+.modal-content {
+  background:#fff;
+  padding:20px;
+  text-align:center;
+  width:400px;
+}
+
 .modal img { width:200px; margin:10px 0; }
-.modal-buttons { display:flex; justify-content:space-between; margin-top:15px; }
+
+.modal-buttons {
+  display:flex;
+  justify-content:space-between;
+  margin-top:15px;
+}
+
 .btn-yes { background:#00b06f; color:#fff; padding:10px 20px; cursor:pointer; }
 .btn-no { background:#ccc; padding:10px 20px; cursor:pointer; }
 </style>
+
 </head>
 <body>
 
@@ -38,76 +74,21 @@ body { font-family: Arial, sans-serif; background:#f2f2f2; margin:0; }
 <div id="catalog" class="grid"></div>
 
 <div id="detail" class="detail">
-    <div class="detail-wrapper" id="detail-content"></div>
+  <div class="detail-wrapper" id="detail-content"></div>
 </div>
 
 <div id="modal" class="modal">
-    <div class="modal-content">
-        <h3>¿Quieres descargar el archivo del siguiente juego?</h3>
-        <img id="modal-img">
-        <div class="modal-buttons">
-            <div class="btn-yes" onclick="downloadFile()">Sí</div>
-            <div class="btn-no" onclick="closeModal()">No</div>
-        </div>
+  <div class="modal-content">
+    <h3>¿Quieres descargar el archivo del siguiente juego?</h3>
+    <img id="modal-img">
+    <div class="modal-buttons">
+      <div class="btn-yes" onclick="downloadFile()">Sí</div>
+      <div class="btn-no" onclick="closeModal()">No</div>
     </div>
+  </div>
 </div>
 
 <script src="script.js"></script>
-
-const catalog = document.getElementById("catalog");
-const detail = document.getElementById("detail");
-const detailContent = document.getElementById("detail-content");
-
-fetch("data/items.json")
-    .then(res => res.json())
-    .then(data => {
-        items = data;
-        buildCatalog();
-    });
-
-function buildCatalog() {
-    catalog.innerHTML = "";
-
-    items.forEach((item, index) => {
-        catalog.innerHTML += `
-            <div class="card" onclick="openDetail(${index})">
-                <img src="${item.image}">
-                <div class="title">${item.name}</div>
-                <div class="rating">⭐ 4.5</div>
-            </div>
-        `;
-    });
-}
-
-function openDetail(index) {
-    const item = items[index];
-
-    catalog.style.display = "none";
-    detail.style.display = "block";
-
-    detailContent.innerHTML = `
-        <img src="${item.image}">
-        <h2>${item.name}</h2>
-        <div class="date">📅 Creado en ${item.date}</div>
-        <div class="desc">${item.description}</div>
-        <div class="download-btn" onclick="openModal('${item.file}','${item.image}')">Obtener</div>
-    `;
-}
-
-function openModal(file, img) {
-    currentFile = file;
-    document.getElementById("modal-img").src = img;
-    document.getElementById("modal").style.display = "flex";
-}
-
-function closeModal() {
-    document.getElementById("modal").style.display = "none";
-}
-
-function downloadFile() {
-    window.location.href = currentFile;
-}
-</script>
 
 </body>
 </html>
