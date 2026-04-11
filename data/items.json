@@ -2,7 +2,7 @@
   {
     "id": "innovation_labs",
     "name": "Innovation Labs",
-    "image": "images/innovation_labs.png",
+    "image": "/RobloxStudio/images/innovation_labs.png"
     "file": "Games/Innovation_Labs.rbxl",
     "date": 2026,
     "description": "Un mapa sobre un laboratorio explorable"
