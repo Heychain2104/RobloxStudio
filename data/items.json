@@ -1,7 +1,7 @@
 [
   {
     "name": "Innovation Labs",
-    "image": "Images/innovation_labs.png",
+    "image": "images/innovation_labs.png",
     "file": "Games/Innovation_Labs.rbxl",
     "date": "2026",
     "description": "Un mapa sobre un laboratorio explorable"
