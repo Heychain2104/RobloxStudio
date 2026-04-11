@@ -1,18 +1,36 @@
 let items = [];
 let currentFile = "";
 
+// Elementos
 const catalog = document.getElementById("catalog");
 const detail = document.getElementById("detail");
 const detailContent = document.getElementById("detail-content");
 
+// Cargar JSON
 fetch("data/items.json")
-  .then(res => res.json())
+  .then(res => {
+    if (!res.ok) {
+      throw new Error("No se pudo cargar el JSON");
+    }
+    return res.json();
+  })
   .then(data => {
+    console.log("JSON cargado:", data);
+
+    // Seguridad: asegurar que es array
+    if (!Array.isArray(data)) {
+      console.error("El JSON NO es un array:", data);
+      return;
+    }
+
     items = data;
     buildCatalog();
   })
-  .catch(err => console.error("Error cargando JSON:", err));
+  .catch(err => {
+    console.error("Error cargando JSON:", err);
+  });
 
+// Crear catálogo
 function buildCatalog() {
   catalog.innerHTML = "";
 
@@ -27,6 +45,7 @@ function buildCatalog() {
   });
 }
 
+// Abrir detalle
 function openDetail(index) {
   const item = items[index];
 
@@ -44,6 +63,7 @@ function openDetail(index) {
   `;
 }
 
+// Modal
 function openModal(file, img) {
   currentFile = file;
   document.getElementById("modal-img").src = img;
@@ -54,6 +74,7 @@ function closeModal() {
   document.getElementById("modal").style.display = "none";
 }
 
+// Descargar
 function downloadFile() {
   window.location.href = currentFile;
 }
